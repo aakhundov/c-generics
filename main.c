@@ -9,6 +9,7 @@
 int main(int argc, char *argv[])
 {
     TEST(test_swap);
+    TEST(test_lsearch);
 
     return 0;
 }
