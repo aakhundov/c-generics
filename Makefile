@@ -1,2 +1,2 @@
 all:
-	gcc swap.c main.c -o generics
+	gcc -std=c99 *.c -o generics
