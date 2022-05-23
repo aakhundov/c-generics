@@ -2,13 +2,13 @@
 
 #include <stdio.h>
 
-void *binary_search(void *arr, void *key, size_t arrSize, size_t elemSize, int (*cmp)(void *, void *)) {
+void *binary_search(void *arr, void *key, size_t arr_size, size_t elem_size, int (*cmp)(void *, void *)) {
     int left = 0;
-    int right = arrSize - 1;
+    int right = arr_size - 1;
 
     while (left <= right) {
         int mid = (left + right) / 2;
-        void *elem = (char *)arr + mid * elemSize;
+        void *elem = (char *)arr + mid * elem_size;
         int cmp_value = cmp(elem, key);
 
         if (cmp_value == 0) {

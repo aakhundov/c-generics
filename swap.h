@@ -3,6 +3,6 @@
 
 #include <stdio.h>
 
-void swap(void *a, void *b, size_t elemSize);
+void swap(void *a, void *b, size_t elem_size);
 
 #endif  // SWAP_H_

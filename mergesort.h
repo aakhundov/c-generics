@@ -3,6 +3,6 @@
 
 #include <stdio.h>
 
-void merge_sort(void *arr, size_t arrSize, size_t elemSize, int (*cmp)(void *, void *));
+void merge_sort(void *arr, size_t arr_size, size_t elem_size, int (*cmp)(void *, void *));
 
 #endif  // MERGESORT_H_
