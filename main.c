@@ -11,6 +11,7 @@ int main(int argc, char *argv[]) {
     TEST(test_swap);
     TEST(test_linear_search);
     TEST(test_binary_search);
+    TEST(test_merge_sort);
 
     return 0;
 }

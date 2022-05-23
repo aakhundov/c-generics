@@ -6,6 +6,7 @@
 
 #include "bsearch.h"
 #include "lsearch.h"
+#include "mergesort.h"
 #include "swap.h"
 
 static int cmp_int(void *p1, void *p2) {
@@ -230,4 +231,85 @@ void test_binary_search() {
     test_binary_search_double();
     test_binary_search_str();
     test_binary_search_empty();
+}
+
+static void test_merge_sort_int() {
+    size_t size = 7;
+    int arr1[] = {123, 456, -2, 22, 0, -146, 52};
+    int arr2[] = {-146, -2, 0, 22, 52, 123, 456};
+    int arr3[] = {456, 123, 52, 22, 0, -2, -146};
+    int target[] = {-146, -2, 0, 22, 52, 123, 456};
+
+    merge_sort(arr1, size, sizeof(int), cmp_int);
+    for (int i = 0; i < size; i++) {
+        assert(arr1[i] == target[i]);
+    }
+
+    merge_sort(arr2, size, sizeof(int), cmp_int);
+    for (int i = 0; i < size; i++) {
+        assert(arr2[i] == target[i]);
+    }
+
+    merge_sort(arr3, size, sizeof(int), cmp_int);
+    for (int i = 0; i < size; i++) {
+        assert(arr3[i] == target[i]);
+    }
+}
+
+static void test_merge_sort_double() {
+    size_t size = 7;
+    double arr1[] = {6.12, 5.1, 44.2, 3.0, -222.2, -15, 0.0123};
+    double arr2[] = {44.2, 6.12, 5.1, 3.0, 0.0123, -15, -222.2};
+    double arr3[] = {-222.2, -15, 0.0123, 3.0, 5.1, 6.12, 44.2};
+    double target[] = {-222.2, -15, 0.0123, 3.0, 5.1, 6.12, 44.2};
+
+    merge_sort(arr1, size, sizeof(double), cmp_double);
+    for (int i = 0; i < size; i++) {
+        assert(arr1[i] == target[i]);
+    }
+
+    merge_sort(arr2, size, sizeof(double), cmp_double);
+    for (int i = 0; i < size; i++) {
+        assert(arr2[i] == target[i]);
+    }
+
+    merge_sort(arr3, size, sizeof(double), cmp_double);
+    for (int i = 0; i < size; i++) {
+        assert(arr3[i] == target[i]);
+    }
+}
+
+static void test_merge_sort_str() {
+    size_t size = 6;
+    char *target[] = {"Al", "Bob", "Bob", "Carl", "Cat", "Dave"};
+    char *arr1[] = {"Bob", "Dave", "Al", "Bob", "Cat", "Carl"};
+    char *arr2[] = {"Dave", "Cat", "Carl", "Bob", "Bob", "Al"};
+    char *arr3[] = {"Al", "Bob", "Bob", "Carl", "Cat", "Dave"};
+
+    merge_sort(arr1, size, sizeof(char *), cmp_str);
+    for (int i = 0; i < size; i++) {
+        assert(arr1[i] == target[i]);
+    }
+
+    merge_sort(arr2, size, sizeof(char *), cmp_str);
+    for (int i = 0; i < size; i++) {
+        assert(arr2[i] == target[i]);
+    }
+
+    merge_sort(arr3, size, sizeof(char *), cmp_str);
+    for (int i = 0; i < size; i++) {
+        assert(arr3[i] == target[i]);
+    }
+}
+
+static void test_merge_sort_empty() {
+    int arr[] = {};
+    merge_sort(arr, 0, sizeof(int), cmp_int);
+}
+
+void test_merge_sort() {
+    test_merge_sort_int();
+    test_merge_sort_double();
+    test_merge_sort_str();
+    test_merge_sort_empty();
 }
