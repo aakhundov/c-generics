@@ -1,22 +1,21 @@
-#include <assert.h>
-#include <string.h>
-#include <stdlib.h>
-
 #include "test.h"
-#include "swap.h"
-#include "lsearch.h"
-#include "bsearch.h"
 
-static int cmp_int(void *p1, void *p2)
-{
+#include <assert.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "bsearch.h"
+#include "lsearch.h"
+#include "swap.h"
+
+static int cmp_int(void *p1, void *p2) {
     int i1 = *(int *)p1;
     int i2 = *(int *)p2;
 
     return i1 - i2;
 }
 
-static int cmp_double(void *p1, void *p2)
-{
+static int cmp_double(void *p1, void *p2) {
     double d1 = *(double *)p1;
     double d2 = *(double *)p2;
 
@@ -28,30 +27,26 @@ static int cmp_double(void *p1, void *p2)
         return 1;
 }
 
-static int cmp_str(void *p1, void *p2)
-{
+static int cmp_str(void *p1, void *p2) {
     char *s1 = *(char **)p1;
     char *s2 = *(char **)p2;
 
     return strcmp(s1, s2);
 }
 
-static void test_swap_int()
-{
+static void test_swap_int() {
     int a = 1, b = 2;
     swap(&a, &b, sizeof(int));
     assert(a == 2 && b == 1);
 }
 
-static void test_swap_double()
-{
+static void test_swap_double() {
     double pi = 3.14, e = 2.71;
     swap(&pi, &e, sizeof(double));
     assert(pi == 2.71 && e == 3.14);
 }
 
-static void test_swap_str()
-{
+static void test_swap_str() {
     char *s1 = strdup("First");
     char *s2 = strdup("Second");
     swap(&s1, &s2, sizeof(char *));
@@ -61,15 +56,13 @@ static void test_swap_str()
     free(s2);
 }
 
-void test_swap()
-{
+void test_swap() {
     test_swap_int();
     test_swap_double();
     test_swap_str();
 }
 
-static void test_linear_search_int()
-{
+static void test_linear_search_int() {
     int arr[] = {1, 2, 3, 4, 5};
     int query;
     void *found;
@@ -83,8 +76,7 @@ static void test_linear_search_int()
     assert(found == 0);
 }
 
-static void test_linear_search_double()
-{
+static void test_linear_search_double() {
     double arr[] = {6.023, 2.71, 3.14};
     double query;
     void *found;
@@ -102,8 +94,7 @@ static void test_linear_search_double()
     assert(found == 0);
 }
 
-static void test_linear_search_str()
-{
+static void test_linear_search_str() {
     char *arr[] = {"Hello", "world"};
     char *query;
     void *found;
@@ -119,24 +110,21 @@ static void test_linear_search_str()
     free(query);
 }
 
-static void test_linear_search_empty()
-{
+static void test_linear_search_empty() {
     int arr[] = {};
     int query = 10;
     void *found = linear_search(arr, &query, 0, sizeof(int), cmp_int);
     assert(found == 0);
 }
 
-void test_linear_search()
-{
+void test_linear_search() {
     test_linear_search_int();
     test_linear_search_double();
     test_linear_search_str();
     test_linear_search_empty();
 }
 
-static void test_binary_search_int()
-{
+static void test_binary_search_int() {
     int arr[] = {-20, -5, 0, 1, 1, 12, 134, 150};
     int query;
     void *found;
@@ -170,8 +158,7 @@ static void test_binary_search_int()
     assert(found == 0);
 }
 
-static void test_binary_search_double()
-{
+static void test_binary_search_double() {
     double arr[] = {2.71, 3.14, 6.023};
     double query;
     void *found;
@@ -193,8 +180,7 @@ static void test_binary_search_double()
     assert(found == 0);
 }
 
-static void test_binary_search_str()
-{
+static void test_binary_search_str() {
     char *arr[] = {"Al", "Bob", "Bob", "Carl", "Cat", "Dave"};
     char *query;
     void *found;
@@ -232,16 +218,14 @@ static void test_binary_search_str()
     assert(found == 0);
 }
 
-static void test_binary_search_empty()
-{
+static void test_binary_search_empty() {
     int arr[] = {};
     int query = 10;
     void *found = binary_search(arr, &query, 0, sizeof(int), cmp_int);
     assert(found == 0);
 }
 
-void test_binary_search()
-{
+void test_binary_search() {
     test_binary_search_int();
     test_binary_search_double();
     test_binary_search_str();
