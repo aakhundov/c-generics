@@ -2,7 +2,7 @@
 
 #include "lsearch.h"
 
-void *lsearch(void *arr, void *key, size_t arrSize, size_t elemSize, int (*cmp)(void *, void *))
+void *linear_search(void *arr, void *key, size_t arrSize, size_t elemSize, int (*cmp)(void *, void *))
 {
     for (size_t i = 0; i < arrSize; i++)
     {
