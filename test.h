@@ -6,5 +6,6 @@ void test_linear_search();
 void test_binary_search();
 void test_merge_sort();
 void test_quick_sort();
+void test_stack();
 
 #endif  // TEST_H_

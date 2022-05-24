@@ -13,6 +13,7 @@ int main(int argc, char *argv[]) {
     TEST(test_binary_search);
     TEST(test_merge_sort);
     TEST(test_quick_sort);
+    TEST(test_stack);
 
     return 0;
 }

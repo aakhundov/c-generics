@@ -1,6 +1,7 @@
 #include "test.h"
 
 #include <assert.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -8,6 +9,7 @@
 #include "lsearch.h"
 #include "mergesort.h"
 #include "quicksort.h"
+#include "stack.h"
 #include "swap.h"
 
 static int cmp_int(void *p1, void *p2) {
@@ -34,6 +36,11 @@ static int cmp_str(void *p1, void *p2) {
     char *s2 = *(char **)p2;
 
     return strcmp(s1, s2);
+}
+
+static void dispose_str(void *p) {
+    char *s = *(char **)p;
+    free(s);
 }
 
 static void test_swap_int() {
@@ -320,4 +327,98 @@ void test_quick_sort() {
     test_sort_double(quick_sort);
     test_sort_str(quick_sort);
     test_sort_empty(quick_sort);
+}
+
+static void test_stack_int() {
+    int j;
+    stack s;
+
+    stack_init(&s, sizeof(int), NULL);
+    assert(stack_size(&s) == 0);
+
+    for (int i = 0; i < 10; i++) {
+        stack_push(&s, &i);
+        stack_peek(&s, &j);
+        assert(stack_size(&s) == i + 1);
+        assert(j == i);
+    }
+
+    for (int i = 9; i > 0; i--) {
+        stack_pop(&s, &j);
+        assert(stack_size(&s) == i);
+        assert(j == i);
+        stack_peek(&s, &j);
+        assert(j == i - 1);
+    }
+
+    assert(stack_size(&s) == 1);
+    stack_dispose(&s);
+}
+
+static void test_stack_double() {
+    double j;
+    stack s;
+
+    stack_init(&s, sizeof(double), NULL);
+    assert(stack_size(&s) == 0);
+
+    for (double i = 0; i < 10; i++) {
+        stack_push(&s, &i);
+        stack_peek(&s, &j);
+        assert(stack_size(&s) == i + 1);
+        assert(j == i);
+    }
+
+    for (double i = 9; i > 0; i--) {
+        stack_pop(&s, &j);
+        assert(stack_size(&s) == i);
+        assert(j == i);
+        stack_peek(&s, &j);
+        assert(j == i - 1);
+    }
+
+    assert(stack_size(&s) == 1);
+    stack_dispose(&s);
+}
+
+static void test_stack_str() {
+    char *arr[] = {"Al", "Bob", "Bob", "Carl", "Cat", "Dave"};
+
+    char *word;
+    stack s;
+
+    stack_init(&s, sizeof(char *), dispose_str);
+    assert(stack_size(&s) == 0);
+
+    for (int i = 0; i < 6; i++) {
+        word = strdup(arr[i]);
+        stack_push(&s, &word);
+        stack_peek(&s, &word);
+        assert(stack_size(&s) == i + 1);
+        assert(strcmp(word, arr[i]) == 0);
+    }
+
+    for (int i = 5; i > 0; i--) {
+        stack_pop(&s, &word);
+        assert(stack_size(&s) == i);
+        assert(strcmp(word, arr[i]) == 0);
+        stack_peek(&s, &word);
+        assert(strcmp(word, arr[i - 1]) == 0);
+    }
+
+    assert(stack_size(&s) == 1);
+    stack_dispose(&s);
+}
+
+static void test_stack_empty() {
+    stack s;
+    stack_init(&s, sizeof(int), NULL);
+    assert(stack_size(&s) == 0);
+    stack_dispose(&s);
+}
+
+void test_stack() {
+    test_stack_int();
+    test_stack_double();
+    test_stack_str();
 }
