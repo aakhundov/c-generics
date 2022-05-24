@@ -75,7 +75,7 @@ static void test_linear_search_int() {
 
     query = 10;
     found = linear_search(arr, &query, 5, sizeof(int), cmp_int);
-    assert(found == 0);
+    assert(found == NULL);
 }
 
 static void test_linear_search_double() {
@@ -93,7 +93,7 @@ static void test_linear_search_double() {
 
     query = 1.234;
     found = linear_search(arr, &query, 5, sizeof(double), cmp_double);
-    assert(found == 0);
+    assert(found == NULL);
 }
 
 static void test_linear_search_str() {
@@ -108,7 +108,7 @@ static void test_linear_search_str() {
 
     query = strdup("hello");
     found = linear_search(arr, &query, 2, sizeof(char *), cmp_str);
-    assert(found == 0);
+    assert(found == NULL);
     free(query);
 }
 
@@ -116,7 +116,7 @@ static void test_linear_search_empty() {
     int arr[] = {};
     int query = 10;
     void *found = linear_search(arr, &query, 0, sizeof(int), cmp_int);
-    assert(found == 0);
+    assert(found == NULL);
 }
 
 void test_linear_search() {
@@ -149,15 +149,15 @@ static void test_binary_search_int() {
 
     query = 2;
     found = binary_search(arr, &query, 8, sizeof(int), cmp_int);
-    assert(found == 0);
+    assert(found == NULL);
 
     query = -100;
     found = binary_search(arr, &query, 8, sizeof(int), cmp_int);
-    assert(found == 0);
+    assert(found == NULL);
 
     query = 200;
     found = binary_search(arr, &query, 8, sizeof(int), cmp_int);
-    assert(found == 0);
+    assert(found == NULL);
 }
 
 static void test_binary_search_double() {
@@ -179,7 +179,7 @@ static void test_binary_search_double() {
 
     query = 1.234;
     found = binary_search(arr, &query, 5, sizeof(double), cmp_double);
-    assert(found == 0);
+    assert(found == NULL);
 }
 
 static void test_binary_search_str() {
@@ -205,26 +205,26 @@ static void test_binary_search_str() {
 
     query = "";
     found = binary_search(arr, &query, 6, sizeof(char *), cmp_str);
-    assert(found == 0);
+    assert(found == NULL);
 
     query = "Ad";
     found = binary_search(arr, &query, 6, sizeof(char *), cmp_str);
-    assert(found == 0);
+    assert(found == NULL);
 
     query = "Bert";
     found = binary_search(arr, &query, 6, sizeof(char *), cmp_str);
-    assert(found == 0);
+    assert(found == NULL);
 
     query = "Zoe";
     found = binary_search(arr, &query, 6, sizeof(char *), cmp_str);
-    assert(found == 0);
+    assert(found == NULL);
 }
 
 static void test_binary_search_empty() {
     int arr[] = {};
     int query = 10;
     void *found = binary_search(arr, &query, 0, sizeof(int), cmp_int);
-    assert(found == 0);
+    assert(found == NULL);
 }
 
 void test_binary_search() {

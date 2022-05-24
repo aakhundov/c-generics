@@ -10,5 +10,5 @@ void *linear_search(void *arr, void *key, size_t arr_size, size_t elem_size, int
         }
     }
 
-    return 0;
+    return NULL;
 }
