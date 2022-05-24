@@ -58,5 +58,6 @@ static void merge_sort_rec(void *left, void *right, size_t elem_size, int (*cmp)
 void merge_sort(void *arr, size_t arr_size, size_t elem_size, int (*cmp)(void *, void *)) {
     void *left = arr;
     void *right = (char *)arr + arr_size * elem_size;
+
     merge_sort_rec(left, right, elem_size, cmp);
 }

@@ -7,6 +7,7 @@
 #include "bsearch.h"
 #include "lsearch.h"
 #include "mergesort.h"
+#include "quicksort.h"
 #include "swap.h"
 
 static int cmp_int(void *p1, void *p2) {
@@ -312,4 +313,11 @@ void test_merge_sort() {
     test_sort_double(merge_sort);
     test_sort_str(merge_sort);
     test_sort_empty(merge_sort);
+}
+
+void test_quick_sort() {
+    test_sort_int(quick_sort);
+    test_sort_double(quick_sort);
+    test_sort_str(quick_sort);
+    test_sort_empty(quick_sort);
 }
