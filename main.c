@@ -14,6 +14,7 @@ int main(int argc, char *argv[]) {
     TEST(test_merge_sort);
     TEST(test_quick_sort);
     TEST(test_stack);
+    TEST(test_queue);
 
     return 0;
 }

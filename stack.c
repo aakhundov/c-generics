@@ -39,13 +39,13 @@ void stack_push(stack *s, void *elem_addr) {
 
     void *elem = (char *)s->data + s->size * s->elem_size;
     memcpy(elem, elem_addr, s->elem_size);
-    s->size += 1;
+    s->size++;
 }
 
 void stack_pop(stack *s, void *elem_addr) {
     assert(s->size > 0);
 
-    s->size -= 1;
+    s->size--;
     void *elem = (char *)s->data + s->size * s->elem_size;
     memcpy(elem_addr, elem, s->elem_size);
 }

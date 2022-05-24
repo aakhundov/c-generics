@@ -8,6 +8,7 @@
 #include "bsearch.h"
 #include "lsearch.h"
 #include "mergesort.h"
+#include "queue.h"
 #include "quicksort.h"
 #include "stack.h"
 #include "swap.h"
@@ -249,17 +250,17 @@ static void test_sort_int(void (*sort_fn)(void *, size_t, size_t, int (*)(void *
     int target[] = {-146, -2, 0, 22, 52, 123, 456};
 
     sort_fn(arr1, size, sizeof(int), cmp_int);
-    for (int i = 0; i < size; i++) {
+    for (size_t i = 0; i < size; i++) {
         assert(arr1[i] == target[i]);
     }
 
     sort_fn(arr2, size, sizeof(int), cmp_int);
-    for (int i = 0; i < size; i++) {
+    for (size_t i = 0; i < size; i++) {
         assert(arr2[i] == target[i]);
     }
 
     sort_fn(arr3, size, sizeof(int), cmp_int);
-    for (int i = 0; i < size; i++) {
+    for (size_t i = 0; i < size; i++) {
         assert(arr3[i] == target[i]);
     }
 }
@@ -272,17 +273,17 @@ static void test_sort_double(void (*sort_fn)(void *, size_t, size_t, int (*)(voi
     double target[] = {-222.2, -15, 0.0123, 3.0, 5.1, 6.12, 44.2};
 
     sort_fn(arr1, size, sizeof(double), cmp_double);
-    for (int i = 0; i < size; i++) {
+    for (size_t i = 0; i < size; i++) {
         assert(arr1[i] == target[i]);
     }
 
     sort_fn(arr2, size, sizeof(double), cmp_double);
-    for (int i = 0; i < size; i++) {
+    for (size_t i = 0; i < size; i++) {
         assert(arr2[i] == target[i]);
     }
 
     sort_fn(arr3, size, sizeof(double), cmp_double);
-    for (int i = 0; i < size; i++) {
+    for (size_t i = 0; i < size; i++) {
         assert(arr3[i] == target[i]);
     }
 }
@@ -295,17 +296,17 @@ static void test_sort_str(void (*sort_fn)(void *, size_t, size_t, int (*)(void *
     char *arr3[] = {"Al", "Bob", "Bob", "Carl", "Cat", "Dave"};
 
     sort_fn(arr1, size, sizeof(char *), cmp_str);
-    for (int i = 0; i < size; i++) {
+    for (size_t i = 0; i < size; i++) {
         assert(arr1[i] == target[i]);
     }
 
     sort_fn(arr2, size, sizeof(char *), cmp_str);
-    for (int i = 0; i < size; i++) {
+    for (size_t i = 0; i < size; i++) {
         assert(arr2[i] == target[i]);
     }
 
     sort_fn(arr3, size, sizeof(char *), cmp_str);
-    for (int i = 0; i < size; i++) {
+    for (size_t i = 0; i < size; i++) {
         assert(arr3[i] == target[i]);
     }
 }
@@ -390,7 +391,7 @@ static void test_stack_str() {
     stack_init(&s, sizeof(char *), dispose_str);
     assert(stack_size(&s) == 0);
 
-    for (int i = 0; i < 6; i++) {
+    for (size_t i = 0; i < 6; i++) {
         word = strdup(arr[i]);
         stack_push(&s, &word);
         stack_peek(&s, &word);
@@ -398,10 +399,11 @@ static void test_stack_str() {
         assert(strcmp(word, arr[i]) == 0);
     }
 
-    for (int i = 5; i > 0; i--) {
+    for (size_t i = 5; i > 0; i--) {
         stack_pop(&s, &word);
         assert(stack_size(&s) == i);
         assert(strcmp(word, arr[i]) == 0);
+        free(word);
         stack_peek(&s, &word);
         assert(strcmp(word, arr[i - 1]) == 0);
     }
@@ -421,4 +423,101 @@ void test_stack() {
     test_stack_int();
     test_stack_double();
     test_stack_str();
+    test_stack_empty();
+}
+
+static void test_queue_int() {
+    int j;
+    queue q;
+
+    queue_init(&q, sizeof(int), NULL);
+    assert(queue_size(&q) == 0);
+
+    for (int i = 0; i < 10; i++) {
+        queue_enqueue(&q, &i);
+        queue_front(&q, &j);
+        assert(queue_size(&q) == i + 1);
+        assert(j == 0);
+    }
+
+    for (int i = 0; i < 9; i++) {
+        queue_dequeue(&q, &j);
+        assert(queue_size(&q) == 9 - i);
+        assert(j == i);
+        queue_front(&q, &j);
+        assert(j == i + 1);
+    }
+
+    assert(queue_size(&q) == 1);
+    queue_dispose(&q);
+}
+
+static void test_queue_double() {
+    double j;
+    queue q;
+
+    queue_init(&q, sizeof(double), NULL);
+    assert(queue_size(&q) == 0);
+
+    for (double i = 0; i < 10; i++) {
+        queue_enqueue(&q, &i);
+        queue_front(&q, &j);
+        assert(queue_size(&q) == i + 1);
+        assert(j == 0);
+    }
+
+    for (double i = 0; i < 9; i++) {
+        queue_dequeue(&q, &j);
+        assert(queue_size(&q) == 9 - i);
+        assert(j == i);
+        queue_front(&q, &j);
+        assert(j == i + 1);
+    }
+
+    assert(queue_size(&q) == 1);
+    queue_dispose(&q);
+}
+
+static void test_queue_str() {
+    char *arr[] = {"Al", "Bob", "Bob", "Carl", "Cat", "Dave"};
+
+    char *word;
+    queue q;
+
+    queue_init(&q, sizeof(char *), dispose_str);
+    assert(queue_size(&q) == 0);
+
+    for (size_t i = 0; i < 6; i++) {
+        word = strdup(arr[i]);
+        queue_enqueue(&q, &word);
+        queue_front(&q, &word);
+        assert(queue_size(&q) == i + 1);
+        assert(strcmp(word, arr[0]) == 0);
+    }
+
+    for (size_t i = 0; i < 5; i++) {
+        queue_dequeue(&q, &word);
+        assert(queue_size(&q) == 5 - i);
+        assert(strcmp(word, arr[i]) == 0);
+        free(word);
+        queue_front(&q, &word);
+        assert(strcmp(word, arr[i + 1]) == 0);
+    }
+
+    assert(queue_size(&q) == 1);
+    queue_dispose(&q);
+}
+
+static void test_queue_empty() {
+    queue q;
+    queue_init(&q, sizeof(int), NULL);
+    assert(queue_size(&q) == 0);
+    queue_dispose(&q);
+}
+
+void test_queue() {
+    test_queue_int();
+    test_queue_double();
+    test_queue_str();
+    test_queue_empty();
 }
