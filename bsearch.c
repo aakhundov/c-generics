@@ -3,20 +3,20 @@
 #include <stdio.h>
 
 void *binary_search(void *arr, void *key, size_t arr_size, size_t elem_size, int (*cmp)(void *, void *)) {
-    int left = 0;
-    int right = arr_size - 1;
+    void *left = arr;
+    void *right = (char *)arr + (arr_size - 1) * elem_size;
 
     while (left <= right) {
-        int mid = (left + right) / 2;
-        void *elem = (char *)arr + mid * elem_size;
-        int cmp_value = cmp(elem, key);
+        size_t len = ((char *)right - (char *)left) / elem_size;
+        void *mid = (char *)left + (len / 2) * elem_size;
+        int cmp_value = cmp(mid, key);
 
         if (cmp_value == 0) {
-            return elem;
+            return mid;
         } else if (cmp_value < 0) {
-            left = mid + 1;
+            left = (char *)mid + elem_size;
         } else {
-            right = mid - 1;
+            right = (char *)mid - elem_size;
         }
     }
 
